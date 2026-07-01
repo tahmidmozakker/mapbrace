@@ -90,8 +90,11 @@ function App() {
 
   return (
     <div className="App">
-      <h1>MapBrace</h1>
-      <p>Find your way across Dhaka</p>
+      <div className="header">
+        <div className="logo">🗺️</div>
+        <h1>MapBrace</h1>
+        <p>Navigate Dhaka's transport like a local</p>
+      </div>
 
       <div className="search-box">
         <div className="location-row">
