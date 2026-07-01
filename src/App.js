@@ -83,7 +83,7 @@ function App() {
       </div>
 
       {notFound && (
-        <p style={{ color: 'red', marginTop: '16px' }}>
+        <p className="not-found">
           No route found. Try: Mirpur 10 → Dhanmondi 27
         </p>
       )}
