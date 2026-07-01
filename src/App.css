@@ -186,3 +186,38 @@ h1 {
   font-size: 0.85rem;
   color: #555;
 }
+.autocomplete-wrapper {
+  position: relative;
+  flex: 1;
+}
+
+.autocomplete-wrapper input {
+  width: 100%;
+}
+
+.suggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 2px solid #ccd6e0;
+  border-top: none;
+  border-radius: 0 0 10px 10px;
+  list-style: none;
+  z-index: 100;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.suggestions li {
+  padding: 12px 16px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: #333;
+  transition: background 0.15s;
+}
+
+.suggestions li:hover {
+  background: #eaf2fb;
+  color: #0a3d62;
+}

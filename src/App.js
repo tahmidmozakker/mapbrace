@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import routes from './routes';
 import MapView from './MapView';
+import AutoComplete from './AutoComplete';
 import './App.css';
 
 function App() {
@@ -14,13 +15,6 @@ function App() {
 
   const handleSearch = () => {
     const normalize = (str) => str.toLowerCase().trim();
-    const match = routes.find(r =>
-      normalize(r.from).includes(normalize(from)) ||
-      normalize(from).includes(normalize(r.from)) &&
-      normalize(r.to).includes(normalize(to)) ||
-      normalize(to).includes(normalize(r.to))
-    );
-
     const exactMatch = routes.find(r => {
       const fromMatch = normalize(r.from).includes(normalize(from)) || normalize(from).includes(normalize(r.from));
       const toMatch = normalize(r.to).includes(normalize(to)) || normalize(to).includes(normalize(r.to));
@@ -71,21 +65,19 @@ function App() {
 
       <div className="search-box">
         <div className="location-row">
-          <input
-            type="text"
+          <AutoComplete
             placeholder="From (e.g. Mirpur 10)"
             value={from}
-            onChange={(e) => setFrom(e.target.value)}
+            onChange={setFrom}
           />
           <button className="gps-btn" onClick={handleLocate} disabled={locating}>
             {locating ? '...' : '📍'}
           </button>
         </div>
-        <input
-          type="text"
+        <AutoComplete
           placeholder="To (e.g. Dhanmondi 27)"
           value={to}
-          onChange={(e) => setTo(e.target.value)}
+          onChange={setTo}
         />
         <button onClick={handleSearch}>Find Route</button>
       </div>
