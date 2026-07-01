@@ -1,38 +1,107 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: #f0f4f8;
+  color: #1a1a2e;
+}
+
 .App {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+h1 {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #0a3d62;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.App > p {
+  text-align: center;
+  color: #555;
+  margin: 8px 0 30px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.search-box {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  gap: 12px;
+}
+
+.search-box input {
+  padding: 14px 16px;
+  border: 2px solid #ccd6e0;
+  border-radius: 10px;
+  font-size: 1rem;
+  outline: none;
+  transition: border 0.2s;
+}
+
+.search-box input:focus {
+  border-color: #0a3d62;
+}
+
+.search-box button {
+  padding: 14px;
+  background: #0a3d62;
   color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
 }
 
-.App-link {
-  color: #61dafb;
+.search-box button:hover {
+  background: #1a5276;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.result {
+  margin-top: 30px;
+  background: white;
+  border-radius: 14px;
+  padding: 24px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+
+.result h2 {
+  font-size: 1.3rem;
+  color: #0a3d62;
+  margin-bottom: 6px;
+}
+
+.result > p {
+  font-size: 0.95rem;
+  color: #555;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 12px;
+}
+
+.leg {
+  background: #f7fafc;
+  border-left: 4px solid #0a3d62;
+  border-radius: 8px;
+  padding: 14px 16px;
+  margin-bottom: 12px;
+}
+
+.leg h3 {
+  font-size: 1rem;
+  color: #0a3d62;
+  margin-bottom: 4px;
+}
+
+.leg p {
+  font-size: 0.9rem;
+  color: #444;
+  margin-top: 4px;
 }
