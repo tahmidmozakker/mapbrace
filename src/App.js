@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import routes from './routes';
 import MapView from './MapView';
 import AutoComplete from './AutoComplete';
@@ -12,12 +12,27 @@ function App() {
   const [filter, setFilter] = useState('fastest');
   const [selectedOption, setSelectedOption] = useState(null);
   const [locating, setLocating] = useState(false);
+  const [history, setHistory] = useState([]);
 
-  const handleSearch = () => {
+  useEffect(() => {
+    const saved = localStorage.getItem('mapbrace-history');
+    if (saved) setHistory(JSON.parse(saved));
+  }, []);
+
+  const saveHistory = (from, to) => {
+    const entry = { from, to };
+    const updated = [entry, ...history.filter(h => h.from !== from || h.to !== to)].slice(0, 5);
+    setHistory(updated);
+    localStorage.setItem('mapbrace-history', JSON.stringify(updated));
+  };
+
+  const handleSearch = (customFrom, customTo) => {
+    const f = customFrom || from;
+    const t = customTo || to;
     const normalize = (str) => str.toLowerCase().trim();
     const exactMatch = routes.find(r => {
-      const fromMatch = normalize(r.from).includes(normalize(from)) || normalize(from).includes(normalize(r.from));
-      const toMatch = normalize(r.to).includes(normalize(to)) || normalize(to).includes(normalize(r.to));
+      const fromMatch = normalize(r.from).includes(normalize(f)) || normalize(f).includes(normalize(r.from));
+      const toMatch = normalize(r.to).includes(normalize(t)) || normalize(t).includes(normalize(r.to));
       return fromMatch && toMatch;
     });
 
@@ -25,11 +40,20 @@ function App() {
       setOptions(exactMatch.options);
       setSelectedOption(exactMatch.options[0]);
       setNotFound(false);
+      saveHistory(f, t);
     } else {
       setOptions([]);
       setSelectedOption(null);
       setNotFound(true);
     }
+  };
+
+  const handleSwap = () => {
+    setFrom(to);
+    setTo(from);
+    setOptions([]);
+    setSelectedOption(null);
+    setNotFound(false);
   };
 
   const handleLocate = () => {
@@ -44,6 +68,12 @@ function App() {
         setLocating(false);
       }
     );
+  };
+
+  const handleHistoryClick = (entry) => {
+    setFrom(entry.from);
+    setTo(entry.to);
+    handleSearch(entry.from, entry.to);
   };
 
   const getSortedOptions = () => {
@@ -74,13 +104,33 @@ function App() {
             {locating ? '...' : '📍'}
           </button>
         </div>
+
+        <div className="swap-row">
+          <div className="swap-line" />
+          <button className="swap-btn" onClick={handleSwap}>⇅ Swap</button>
+          <div className="swap-line" />
+        </div>
+
         <AutoComplete
           placeholder="To (e.g. Dhanmondi 27)"
           value={to}
           onChange={setTo}
         />
-        <button onClick={handleSearch}>Find Route</button>
+        <button onClick={() => handleSearch()}>Find Route</button>
       </div>
+
+      {history.length > 0 && options.length === 0 && !notFound && (
+        <div className="history">
+          <p className="history-title">Recent Searches</p>
+          {history.map((entry, i) => (
+            <div key={i} className="history-item" onClick={() => handleHistoryClick(entry)}>
+              <span>📍 {entry.from}</span>
+              <span className="arrow">→</span>
+              <span>📍 {entry.to}</span>
+            </div>
+          ))}
+        </div>
+      )}
 
       {notFound && (
         <p className="not-found">

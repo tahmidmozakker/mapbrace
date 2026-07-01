@@ -291,3 +291,74 @@ h1 {
     gap: 8px;
   }
 }
+.swap-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.swap-line {
+  flex: 1;
+  height: 1px;
+  background: #dde3ea;
+}
+
+.swap-btn {
+  padding: 6px 14px;
+  border: 2px solid #dde3ea;
+  border-radius: 20px;
+  background: white;
+  color: #0a3d62;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.swap-btn:hover {
+  border-color: #0a3d62;
+  background: #eaf2fb;
+}
+
+.history {
+  margin-top: 20px;
+  background: white;
+  border-radius: 16px;
+  padding: 16px 20px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+}
+
+.history-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+}
+
+.history-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 0;
+  border-bottom: 1px solid #f0f0f0;
+  cursor: pointer;
+  font-size: 0.88rem;
+  color: #444;
+  transition: color 0.15s;
+}
+
+.history-item:last-child {
+  border-bottom: none;
+}
+
+.history-item:hover {
+  color: #0a3d62;
+}
+
+.history-item .arrow {
+  color: #aaa;
+  font-size: 0.8rem;
+}
