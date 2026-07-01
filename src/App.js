@@ -4,6 +4,18 @@ import MapView from './MapView';
 import AutoComplete from './AutoComplete';
 import './App.css';
 
+const modeIcon = (mode) => {
+  const m = mode.toLowerCase();
+  if (m.includes('rickshaw')) return '🛺';
+  if (m.includes('bus')) return '🚌';
+  if (m.includes('cng')) return '🚕';
+  if (m.includes('metro')) return '🚇';
+  if (m.includes('motorcycle') || m.includes('bike')) return '🏍️';
+  if (m.includes('walk')) return '🚶';
+  if (m.includes('uber') || m.includes('pathao car')) return '🚗';
+  return '🚌';
+};
+
 function App() {
   const [from, setFrom] = useState('');
   const [to, setTo] = useState('');
@@ -163,13 +175,17 @@ function App() {
             {getSortedOptions().map((opt, i) => {
               const cost = opt.legs.reduce((s, l) => s + l.cost, 0);
               const time = opt.legs.reduce((s, l) => s + l.duration, 0);
+              const icons = [...new Set(opt.legs.map(l => modeIcon(l.mode)))].join(' ');
               return (
                 <div
                   key={i}
                   className={`option-card ${selectedOption === opt ? 'selected' : ''}`}
                   onClick={() => setSelectedOption(opt)}
                 >
-                  <strong>{opt.label}</strong>
+                  <div className="option-left">
+                    <span className="option-icons">{icons}</span>
+                    <strong>{opt.label}</strong>
+                  </div>
                   <span>⏱ {time} mins &nbsp;|&nbsp; ৳{cost}</span>
                 </div>
               );
@@ -183,7 +199,10 @@ function App() {
               <p>Total Time: {totalTime} mins | Total Cost: ৳{totalCost}</p>
               {selectedOption.legs.map((leg, i) => (
                 <div key={i} className="leg">
-                  <h3>Step {i + 1} — {leg.mode}</h3>
+                  <div className="leg-header">
+                    <span className="leg-icon">{modeIcon(leg.mode)}</span>
+                    <h3>Step {i + 1} — {leg.mode}</h3>
+                  </div>
                   <p>{leg.from} → {leg.to}</p>
                   <p>⏱ {leg.duration} mins | ৳ {leg.cost}</p>
                 </div>

@@ -384,3 +384,27 @@ h1 {
   font-size: 0.95rem;
   margin-top: 4px;
 }
+.option-left {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.option-icons {
+  font-size: 1.1rem;
+}
+
+.leg-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.leg-icon {
+  font-size: 1.4rem;
+}
+
+.leg-header h3 {
+  margin: 0;
+}
