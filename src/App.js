@@ -9,19 +9,24 @@ function App() {
   const [notFound, setNotFound] = useState(false);
 
   const handleSearch = () => {
-    const match = routes.find(
-      r =>
-        r.from === from.toLowerCase().trim() &&
-        r.to === to.toLowerCase().trim()
-    );
-    if (match) {
-      setResult(match);
-      setNotFound(false);
-    } else {
-      setResult(null);
-      setNotFound(true);
-    }
-  };
+  const normalize = (str) => str.toLowerCase().trim();
+  const fromNorm = normalize(from);
+  const toNorm = normalize(to);
+
+  const match = routes.find(r => {
+    const fromMatch = normalize(r.from).includes(fromNorm) || fromNorm.includes(normalize(r.from));
+    const toMatch = normalize(r.to).includes(toNorm) || toNorm.includes(normalize(r.to));
+    return fromMatch && toMatch;
+  });
+
+  if (match) {
+    setResult(match);
+    setNotFound(false);
+  } else {
+    setResult(null);
+    setNotFound(true);
+  }
+};
 
   const totalCost = result ? result.legs.reduce((sum, l) => sum + l.cost, 0) : 0;
   const totalTime = result ? result.legs.reduce((sum, l) => sum + l.duration, 0) : 0;
